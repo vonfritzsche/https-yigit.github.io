@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yiğit Deniz Yıldırım — Kişisel Site</title>
+  <meta name="description" content="Yiğit Deniz Yıldırım — Bilgisayar tutkunu, bisikletçi, yüzücü ve gezgin (15 yaşında)." />
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --card:#0f1720;
+      --muted:#97a0b3;
+      --accent:#6ee7b7;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg, #071022 0%, var(--bg) 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      line-height:1.5;
+      padding-bottom:60px;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding: 28px 0;
+    }
+
+    /* HERO */
+    .hero{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      padding:36px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      box-shadow: 0 6px 30px rgba(3,6,12,0.6);
+      margin-top:18px;
+    }
+    .hero-left{flex:1}
+    .greeting{
+      font-size: clamp(22px, 4.5vw, 36px);
+      margin:0 0 8px 0;
+      letter-spacing:0.2px;
+    }
+    .name{
+      font-size: clamp(28px, 6.5vw, 48px);
+      margin:0;
+      color:var(--accent);
+    }
+    .lead{color:var(--muted); margin-top:10px}
+    .btn{
+      display:inline-block;
+      margin-top:16px;
+      padding:10px 16px;
+      background: linear-gradient(90deg,#4ade80,#34d399);
+      color:#052025;
+      border-radius:10px;
+      font-weight:600;
+      box-shadow: 0 8px 18px rgba(52,211,153,0.12);
+    }
+
+    /* SIDE CARD */
+    .hero-right{
+      width:260px;
+      background:var(--card);
+      border-radius:14px;
+      padding:14px;
+      text-align:center;
+    }
+    .avatar{
+      width:96px;height:96px;border-radius:14px;background:linear-gradient(180deg,#0ea5a0,#06b6d4);
+      margin:0 auto 10px;
+      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;color:#021018;
+    }
+    .small{color:var(--muted);font-size:13px}
+
+    /* SECTIONS */
+    section{margin-top:26px;padding:18px;border-radius:12px;background:var(--glass)}
+    h2{margin:0 0 12px 0;font-size:18px}
+    .grid{
+      display:grid;gap:14px;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:14px;border-radius:12px;
+      box-shadow: 0 6px 18px rgba(2,6,12,0.45);
+    }
+    ul.hobbies{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+    ul.hobbies li{display:flex;gap:10px;align-items:center;color:var(--muted)}
+    .emoji{font-size:20px}
+
+    /* PROJECTS */
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .project{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02)}
+
+    /* CONTACT */
+    .contact-row{display:flex;gap:12px;flex-wrap:wrap}
+    .input, textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;
+    }
+    .muted{color:var(--muted);font-size:13px}
+
+    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* responsive small */
+    @media (max-width:720px){
+      .hero{flex-direction:column}
+      .hero-right{width:100%}
+    }
+
+    /* small animation */
+    .fade-up{opacity:0;transform:translateY(8px);transition: all 600ms ease}
+    .fade-up.show{opacity:1;transform:none}
+    .typing { display:inline-block; border-right:2px solid rgba(230,238,248,0.4); padding-right:6px; white-space:nowrap; overflow:hidden; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="hero-left">
+        <p class="greeting"> <span class="typing" id="typed">Nasılsınız efendim? Emredin.</span></p>
+        <h1 class="name">Yiğit Deniz</h1>
+        <p class="lead">16 yaşındayım. Bilgisayarla uğraşmayı vegezmeyi seviyorum. Bu site şahsî projelerimi, hobilerimi ve beni tanımak isteyenler için bilgiler içeriyor.</p>
+        <a class="btn" href="#about">Hakkımda daha fazla</a>
+      </div>
+
+      <aside class="hero-right">
+        <div class="avatar">Y D</div>
+        <div style="margin-top:8px;font-weight:600">Yiğit Deniz </div>
+        <div class="small" style="margin-top:8px">16 yaşında • Türkiye/Trabzon</div>
+      </aside>
+    </header>
+
+    <!-- HAKKIMDA -->
+    <section id="about" class="fade-up">
+      <h2>Hakkımda</h2>
+      <div class="card">
+        <p>Merhaba! Ben Yiğit. Teknolojiyle Uğraşıyorum, bilgisayarlarda donanımla uğraşmayı seven biriyim. Boş zamanlarımda Hearts of Iron IV oynamayı ve yeni yerler keşfetmeyi severim.</p>
+        <p class="muted"></p>
+      </div>
+    </section>
+
+    <!-- HOBİLER -->
+    <section id="hobbies" class="fade-up">
+      <h2>Hobilerim</h2>
+      <div class="grid">
+        <div class="card">
+          <ul class="hobbies">
+            <li><span class="emoji">️</span> Bilgisayarla uğraşmak — donanım, yazılım, modlama vs.</li>
+            <li><span class="emoji">‍♂️</span> Araba sürmek — açık havada dolaşmak</li>
+            <li><span class="emoji">‍♂️</span> Yüzmek — serbest veya tatil kenti</li>
+            <li><span class="emoji"></span> Gezmek — yeni yerler keşfetmek</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 8px 0">Neler yaparım?</h3>
+          <p class="muted">Kendi projelerimi yaparım, oyunlarda modlama denerim, Sosyal Medya üzerinden arkadaşlarla takılırım.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJELER -->
+    <section id="projects" class="fade-up">
+      <h2>Projeler</h2>
+      <div class="projects">
+        <div class="project">
+          <strong>KAPALI)</strong>
+          <p class="muted">YAKINDA</p>
+        </div>
+        <div class="project">
+          <strong>KAPALI</strong>
+          <p class="muted">YAKINDA</p>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:8px"></p>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section id="contact" class="fade-up">
+      <h2>İletişim</h2>
+      <div class="card">
+        <p class="muted">Benimle iletişime geçmek istersen e-posta veya sosyal medya hesapları (gizlilik yüzünden burada açık vermiyorum).</p>
+
+        <form id="contactForm" onsubmit="event.preventDefault(); alert('Form örnek amaçlıdır — gerçek bir backend eklemeden gönderim yapılmaz.');">
+          <input class="input" placeholder="İsmin" required />
+          <input class="input" placeholder="E-posta (örn. example@domain.com)" type="email" required style="margin-top:8px" />
+          <textarea class="input" placeholder="Mesajın" rows="4" style="margin-top:8px"></textarea>
+          <div style="margin-top:10px">
+            <button class="btn" type="submit">Gönder</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="muted">© <span id="year"></span> Yiğit Deniz — Bu site kişisel amaçlıdır.</div>
+    </footer>
+
+  </div>
+
+  <script>
+    // küçük tarih
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // typing effect (sade)
+    (function(){
+      const el = document.getElementById('typed');
+      const texts = [
+        "Nasılsınız efendim? Emredin.",
+        "Selam! Hazırım — emredin.",
+        "Nasılsınız Führerim? Emredin."
+      ];
+      let i=0, pos=0, forward=true, current='';
+      function tick(){
+        const full = texts[i];
+        if(forward){
+          pos++;
+          current = full.slice(0,pos);
+          el.textContent = current;
+          if(pos === full.length){ forward=false; setTimeout(tick,900); return; }
+        } else {
+          pos--;
+          current = full.slice(0,pos);
+          el.textContent = current;
+          if(pos===0){ forward=true; i=(i+1)%texts.length; }
+        }
+        setTimeout(tick, forward ? 70 : 30);
+      }
+      tick();
+    })();
+
+    // basit reveal on scroll
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('show');
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('.fade-up').forEach(el=> io.observe(el));
+  </script>
+</body>
+</html>
