@@ -200,7 +200,7 @@
 
   .about-photo {
     max-height: 300px;   /* Dikey boyu sınırlar, bozulmaz */
-    width: auto;         /* Oran bozulmaz */
+    width: auto;          /* Oran bozulmaz */
     max-width: 32%;      /* üçlü düzen için genişlik sınırlaması */
     display: inline-block;
     border: 2px solid #333;
@@ -233,11 +233,13 @@
 </head>
 <body>
 
-<!-- ================= STARTUP OVERLAY (Windows XP style) ================= -->
+<audio id="bgMusic" loop>
+  <source src="sarkin.mp3" type="audio/mpeg">
+</audio>
+
 <div id="xp-startup" aria-hidden="false" role="dialog" aria-label="startup screen">
   <div class="xp-startup-inner">
-    <!-- BURAYA kendi açılış resmini koy; dosya adını değiştir veya tam yol ver -->
-    <img id="startup-image" src="startup-image.png" alt="Startup image - change me">
+    <img id="startup-image" src="startup-image.jpg" alt="Startup image - change me">
     <div class="startup-text">Starting <strong>yigitforum</strong>…</div>
 
     <div class="xp-progress" aria-hidden="false">
@@ -248,8 +250,6 @@
     <div class="startup-skip" id="startup-skip" tabindex="0">Hemen geç (tıkla)</div>
   </div>
 </div>
-<!-- ================ END STARTUP OVERLAY ================= -->
-
 <header>
   <span class="logo">yigit<span>forum</span></span>
   <div class="search-container">
@@ -269,7 +269,6 @@
 
 <div class="container">
 
-  <!-- ANA SAYFA -->
   <div id="home" class="page active">
     <div class="panel">
       <h2>Konular</h2>
@@ -289,7 +288,7 @@
 
       <div class="category" id="oyun-cat">
         <div class="category-title">Oyun</div>
-        <div class="topic-line"><span class="topic" onclick="openTopicChat('Postal 2 DLC\\'si alınır mı?')">Postal 2 DLC'si alınır mı?</span><button class="join-btn" onclick="openTopicChat('Postal 2 DLC\\'si alınır mı?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Postal 2 DLC\'si alınır mı?')">Postal 2 DLC'si alınır mı?</span><button class="join-btn" onclick="openTopicChat('Postal 2 DLC\'si alınır mı?')">Katıl</button></div>
         <div class="topic-line"><span class="topic" onclick="openTopicChat('Cry of Fear modları hangileri iyi?')">Cry of Fear modları hangileri iyi?</span><button class="join-btn" onclick="openTopicChat('Cry of Fear modları hangileri iyi?')">Katıl</button></div>
         <div class="topic-line"><span class="topic" onclick="openTopicChat('GTA SA bug arşivi')">GTA SA bug arşivi</span><button class="join-btn" onclick="openTopicChat('GTA SA bug arşivi')">Katıl</button></div>
         <div class="expand-btn" onclick="expandCategory('oyun-cat')">+ 5 konu daha (genişlet)</div>
@@ -297,7 +296,7 @@
 
       <div class="category" id="donanim-cat">
         <div class="category-title">Donanım</div>
-        <div class="topic-line"><span class="topic" onclick="openTopicChat('GTX 660 2012\\'de mantıklı mı?')">GTX 660 2012'de mantıklı mı?</span><button class="join-btn" onclick="openTopicChat('GTX 660 2012\\'de mantıklı mı?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('GTX 660 2012\'de mantıklı mı?')">GTX 660 2012'de mantıklı mı?</span><button class="join-btn" onclick="openTopicChat('GTX 660 2012\'de mantıklı mı?')">Katıl</button></div>
         <div class="topic-line"><span class="topic" onclick="openTopicChat('İkinci el ekran kartı riskleri')">İkinci el ekran kartı riskleri</span><button class="join-btn" onclick="openTopicChat('İkinci el ekran kartı riskleri')">Katıl</button></div>
         <div class="topic-line"><span class="topic" onclick="openTopicChat('AMD mi NVIDIA mı?')">AMD mi NVIDIA mı?</span><button class="join-btn" onclick="openTopicChat('AMD mi NVIDIA mı?')">Katıl</button></div>
         <div class="expand-btn" onclick="expandCategory('donanim-cat')">+ 4 konu daha (genişlet)</div>
@@ -313,7 +312,7 @@
 
       <div class="category" id="gunluk-cat">
         <div class="category-title">Günlük</div>
-        <div class="topic-line"><span class="topic" onclick="openTopicChat('Gece 3\\'te internet başka oluyor')">Gece 3'te internet başka oluyor</span><button class="join-btn" onclick="openTopicChat('Gece 3\\'te internet başka oluyor')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Gece 3\'te internet başka oluyor')">Gece 3'te internet başka oluyor</span><button class="join-btn" onclick="openTopicChat('Gece 3\'te internet başka oluyor')">Katıl</button></div>
         <div class="topic-line"><span class="topic" onclick="openTopicChat('Bugün her şey boş geldi')">Bugün her şey boş geldi</span><button class="join-btn" onclick="openTopicChat('Bugün her şey boş geldi')">Katıl</button></div>
         <div class="topic-line"><span class="topic" onclick="openTopicChat('Saçma ama yazasım vardı')">Saçma ama yazasım vardı</span><button class="join-btn" onclick="openTopicChat('Saçma ama yazasım vardı')">Katıl</button></div>
         <div class="expand-btn" onclick="expandCategory('gunluk-cat')">+ 5 konu daha (genişlet)</div>
@@ -353,7 +352,6 @@
     </div>
   </div>
 
-  <!-- CHAT SAYFASI -->
   <div id="chat-page" class="page">
     <div class="panel">
       <h2 id="chat-title">Sohbet</h2>
@@ -366,7 +364,6 @@
     </div>
   </div>
 
-  <!-- GRUPLAR -->
   <div id="gruplar" class="page">
     <div class="panel">
       <h2>Gruplar</h2>
@@ -383,7 +380,6 @@
     </div>
   </div>
 
-  <!-- ÜYELER -->
   <div id="uyeler" class="page">
     <div class="panel">
       <h2>Üyeler</h2>
@@ -398,7 +394,6 @@
     </div>
   </div>
 
-  <!-- ARŞİV -->
   <div id="arsiv" class="page">
     <div class="panel">
       <h2>Arşiv</h2>
@@ -406,7 +401,6 @@
     </div>
   </div>
 
-  <!-- HAKKIMIZDA -->
   <div id="hakkimizda" class="page">
     <div class="panel">
       <h2>Hakkımızda</h2>
@@ -418,9 +412,7 @@
         <p>Burası 2000'ler nostaljisi, gece muhabbetleri, ekran kartı kavgaları ve "eski forumlar daha iyiydi" diyenlerin toplandığı yer.</p>
       </div>
 
-      <!-- 3 FOTOĞRAFLIK KAPSÜL -->
       <div class="about-photo-container" aria-hidden="false">
-        <!-- Fotoğraf dosya isimlerini kendi dosyalarına göre değiştir -->
         <img src="about-photo1.jpg" alt="Yigitforum foto 1" class="about-photo portrait">
         <img src="about-photo2.jpg" alt="Yigitforum foto 2" class="about-photo">
         <img src="about-photo3.jpg" alt="Yigitforum foto 3" class="about-photo">
@@ -428,7 +420,6 @@
     </div>
   </div>
 
-  <!-- GİRİŞ SAYFASI -->
   <div id="giris" class="page">
     <div class="panel">
       <h2>Giriş Yap</h2>
@@ -438,7 +429,6 @@
     </div>
   </div>
 
-  <!-- KAYIT SAYFASI -->
   <div id="kayit" class="page">
     <div class="panel">
       <h2>Kayıt Ol</h2>
@@ -467,6 +457,10 @@
     const bar = document.getElementById('xp-progress-bar');
     const label = document.getElementById('xp-progress-label');
     const skip = document.getElementById('startup-skip');
+    
+    // MÜZİK KONTROLÜ
+    const music = document.getElementById('bgMusic');
+    if(music) music.volume = 0.5; // Ses seviyesini %50 yap
 
     // Ayarlar: burada değiştir
     const AUTO_HIDE_AFTER_MS = 3000; // otomatik kapanma süresi (ms) -> 3000 = 3s
@@ -496,6 +490,10 @@
       if (!overlay) return;
       overlay.classList.add('hidden');
       overlay.setAttribute('aria-hidden', 'true');
+      
+      // MÜZİĞİ BAŞLAT (Eğer daha önce başlamadıysa)
+      if(music && music.paused) music.play().catch(e => console.log("Otomatik oynatma engellendi, etkileşim bekleniyor."));
+
       // cleanup
       if (rafId) cancelAnimationFrame(rafId);
       // focus'u ana sayfaya ver (erişilebilirlik için)
@@ -510,26 +508,32 @@
       if (!overlay) return;
       startTime = null;
       rafId = requestAnimationFrame(updateProgress);
-      // Zorla overlay üzerine tıklama ile atlama
+      
+      // MÜZİK TETİKLEYİCİ: Kullanıcı overlay'e veya skip'e tıkladığında müzik başlar
       overlay.addEventListener('click', function onOverlayClick(e){
-        // eğer tık overlay'in dışından ya da skip'den gelmişse kapat
+        if(music && music.paused) music.play(); // Tıklama anında müziği başlat
         hideOverlay();
         overlay.removeEventListener('click', onOverlayClick);
       });
+
       skip.addEventListener('click', function(e){
         e.stopPropagation();
+        if(music && music.paused) music.play(); // Atla dediğinde de müziği başlat
         hideOverlay();
       });
+
       // space veya enter ile skip butonuna basılmasını sağla (erişilebilirlik)
       skip.addEventListener('keydown', function(e){
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
+          if(music && music.paused) music.play();
           hideOverlay();
         }
       });
       // Esc ile kapama
       window.addEventListener('keydown', function onKey(e){
         if (e.key === 'Escape') {
+          if(music && music.paused) music.play();
           hideOverlay();
           window.removeEventListener('keydown', onKey);
         }
@@ -725,4 +729,3 @@
 </script>
 </body>
 </html>
-
