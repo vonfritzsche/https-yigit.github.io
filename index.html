@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>yigitforum</title>
+<link rel="icon" type="image/png" href="favicon.ico">
+
+<style>
+  /* --- STARTUP OVERLAY STYLES (Windows XP tarzı siyah açılış) --- */
+  #xp-startup {
+    position: fixed;
+    inset: 0;
+    background: #000; /* siyah overlay */
+    color: #cfcfcf;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 500ms ease, visibility 500ms ease;
+    visibility: visible;
+    opacity: 1;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  #xp-startup.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .xp-startup-inner {
+    text-align: center;
+    max-width: 820px;
+    width: 90%;
+  }
+  /* Resim alanı (XP logosu yerine konacak foto) */
+  #startup-image {
+    display: block;
+    margin: 0 auto 18px;
+    width: 260px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.03);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+  }
+  /* Başlık altı küçük açıklama */
+  .startup-text {
+    margin-bottom: 18px;
+    color: #bfbfbf;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+  }
+
+  /* Progress bar (yeni retro/striped XP tarzı) */
+  .xp-progress {
+    width: 420px;
+    max-width: 85%;
+    height: 14px;
+    background: linear-gradient(180deg, #0d0d0d, #131313);
+    border: 1px solid #222;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 6px 18px rgba(0,0,0,0.6);
+    position: relative;
+  }
+
+  /* Bar: temel renk ve animasyonlu çizgiler + parlama */
+  .xp-progress > .bar {
+    height: 100%;
+    width: 0%;
+    position: relative;
+    background: linear-gradient(90deg, #4aa3ff 0%, #3b9bee 40%, #2b7ac8 100%);
+    transition: width 120ms linear;
+    box-shadow: 0 0 14px rgba(60,150,255,0.12), inset 0 -4px 12px rgba(0,0,0,0.25);
+    overflow: hidden;
+  }
+
+  /* üstüne hareketli çizgiler (retro hissi) */
+  .xp-progress > .bar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.06) 0 8px,
+      rgba(255,255,255,0.0) 8px 16px
+    );
+    mix-blend-mode: overlay;
+    animation: stripe-move 0.9s linear infinite;
+    pointer-events: none;
+  }
+
+  /* parlama efekti (soldan kayan parlama) */
+  .xp-progress > .bar::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: -30%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.18) 45%, rgba(255,255,255,0.0) 80%);
+    transform: rotate(15deg);
+    animation: sheen 2.2s ease-in-out infinite;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  @keyframes stripe-move {
+    from { background-position: 0 0; }
+    to { background-position: 48px 0; }
+  }
+  @keyframes sheen {
+    0% { left: -40%; opacity: 0; }
+    35% { left: 40%; opacity: 0.6; }
+    70% { left: 120%; opacity: 0; }
+    100% { left: 160%; opacity: 0; }
+  }
+
+  .xp-progress-label {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #b6d7ff;
+    letter-spacing: 0.2px;
+  }
+  .startup-skip {
+    margin-top: 12px;
+    display:inline-block;
+    font-size:12px;
+    color:#8ecbff;
+    text-decoration:underline;
+    cursor:pointer;
+  }
+
+  /* small accessible focus style for skip */
+  .startup-skip:focus {
+    outline: 2px dashed #4aa3ff;
+    outline-offset: 4px;
+  }
+
+  /* --- END STARTUP OVERLAY STYLES --- */
+
+  /* --- EXISTING SITE STYLES --- */
+  body { margin:0; font-family:Tahoma, Arial, sans-serif; background:linear-gradient(#000,#0a0a0a); color:#cfcfcf; }
+  header { background:linear-gradient(#1e1e1e,#050505); border-bottom:1px solid #2b2b2b; padding:10px 16px; position:relative; text-align:center; }
+  .logo { font-size:20px; font-weight:bold; color:#fff; }
+  .logo span { color:#4aa3ff }
+  nav { margin:8px 0; }
+  nav a { color:#8ecbff; margin:0 14px; font-size:12px; text-decoration:none; cursor:pointer; }
+  nav a.active { color:#fff; border-bottom:2px solid #4aa3ff; }
+  .auth { position:absolute; right:16px; top:16px; font-size:12px; }
+  .auth a { color:#8ecbff; text-decoration:none; margin-left:10px; cursor:pointer; }
+  .logged-in { color:#7cff7c; font-weight:bold; }
+  .search-container { margin:8px auto; max-width:400px; }
+  .search-input { width:100%; background:#000; color:#ccc; border:1px solid #333; padding:6px; font-size:13px; }
+  .container { width:96%; max-width:1200px; margin:20px auto; }
+  .page { display:none; }
+  .page.active { display:block; }
+  .panel { background:linear-gradient(#1a1a1a,#050505); border:1px solid #2b2b2b; margin-bottom:18px; padding:12px; }
+  .panel h2 { margin:0 0 10px; font-size:14px; color:#fff; }
+  .category { margin-bottom:14px; }
+  .category-title { font-size:13px; color:#fff; margin-bottom:6px; }
+  .topic-line { padding:6px 0; border-bottom:1px solid #222; font-size:12px; display:flex; justify-content:space-between; align-items:center; }
+  .topic { flex:1; cursor:pointer; color:#8ecbff; }
+  .topic:hover { text-decoration:underline; }
+  .join-btn { background:#222; color:#8ecbff; border:1px solid #444; padding:2px 8px; font-size:11px; cursor:pointer; border-radius:3px; }
+  .join-btn:hover { background:#333; }
+  .expand-btn { color:#777; font-size:11px; margin-top:4px; cursor:pointer; display:inline-block; }
+  .expand-btn:hover { color:#aaa; }
+  .group-item { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #222; font-size:14px; font-weight:bold; }
+  .group-btn { background:linear-gradient(#4aa3ff,#2b7ac8); color:#fff; border:none; padding:8px 16px; font-size:12px; cursor:pointer; border-radius:5px; font-weight:bold; }
+  .group-btn:hover { background:linear-gradient(#5ab3ff,#3a8ad8); }
+  .thread-post { padding:6px 0; border-bottom:1px dashed #222; font-size:12px; display:flex; align-items:flex-start; gap:8px; }
+  .post-user { min-width:120px; font-weight:bold; text-align:right; }
+  .post-content { flex:1; }
+  .post-time { color:#666; font-size:10px; margin-left:10px; white-space:nowrap; }
+  .user-yigit { color:#4aa3ff }
+  .user-xxaan { color:#ff4444 }
+  .user-anon { color:#7cff7c }
+  .user-creator { color:#ffaa00; font-weight:bold; }
+  .user-admin { color:#ff4444; font-weight:bold; }
+  textarea, input, select { width:100%; background:#000; color:#ccc; border:1px solid #333; padding:6px; font-size:12px; margin:6px 0; }
+  button { background:#111; color:#ccc; border:1px solid #333; padding:4px 12px; font-size:11px; margin-top:6px; cursor:pointer; }
+  .send-btn { background:#4aa3ff; color:#fff; border:1px solid #2b7ac8; }
+  .online { position:fixed; right:20px; top:120px; width:230px; background:linear-gradient(#1a1a1a,#050505); border:1px solid #2b2b2b; padding:12px; font-size:12px; }
+  .footer { text-align:center; color:#666; font-size:11px; margin:40px 0; clear:both; }
+  .about-content p { line-height:1.5; margin-bottom:12px; }
+  .admin-only { color:#ff4444; font-weight:bold; font-size:13px; text-align:center; padding:40px 0; }
+  .member-list li { margin:6px 0; font-size:12px; }
+
+  /* Hakkımızda için fotoğraf alanı */
+  .about-photo-container {
+    text-align:center;
+    margin:30px 0;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    padding-top:8px;
+  }
+
+  .about-photo {
+    max-height: 300px;
+    width: auto;
+    max-width: 32%;
+    display: inline-block;
+    border: 2px solid #333;
+    box-shadow: 0 0 15px rgba(0,0,0,0.8);
+    background: #0a0a0a;
+    padding: 4px;
+    object-fit: contain;
+  }
+
+  @media (max-width:900px) {
+    .about-photo { max-width: 45%; max-height: 260px; }
+  }
+  @media (max-width:520px) {
+    #startup-image { width: 180px; }
+    .xp-progress { width: 280px; }
+    .logo { font-size:18px; }
+    nav a { margin: 0 8px; font-size:11px; }
+    .about-photo { max-width: 90%; max-height: 220px; }
+  }
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="sarkin.mp3" type="audio/mpeg">
+</audio>
+
+<div id="xp-startup" aria-hidden="false" role="dialog" aria-label="startup screen">
+  <div class="xp-startup-inner">
+    <img id="startup-image" src="startup-image.png" alt="Startup image - change me">
+    <div class="startup-text">Starting <strong>yigitforum</strong>…</div>
+
+    <div class="xp-progress" aria-hidden="false">
+      <div class="bar" id="xp-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="xp-progress-label" id="xp-progress-label">Booting components... 0%</div>
+
+    <div class="startup-skip" id="startup-skip" tabindex="0">Hemen geç (tıkla)</div>
+  </div>
+</div>
+
+<header>
+  <span class="logo">yigit<span>forum</span></span>
+  <div class="search-container">
+    <input type="text" id="search-input" class="search-input" placeholder="Konu / kullanıcı ara..." oninput="searchTopics(this.value)">
+  </div>
+  <nav>
+    <a data-page="home" class="active">Ana Sayfa</a>
+    <a data-page="gruplar">Gruplar</a>
+    <a data-page="uyeler">Üyeler</a>
+    <a data-page="arsiv">Arşiv</a>
+    <a data-page="hakkimizda">Hakkımızda</a>
+  </nav>
+  <div class="auth" id="auth-section">
+    <a data-page="giris">Giriş Yap</a> | <a data-page="kayit">Kayıt Ol</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="home" class="page active">
+    <div class="panel">
+      <h2>Konular</h2>
+      <button onclick="checkLoginForNewTopic()">Yeni Konu Aç</button>
+      <div id="new-topic-form" style="display:none; margin:15px 0;">
+        <input type="text" id="new-topic-title" placeholder="Konu başlığı...">
+        <select id="new-topic-category">
+          <option value="oyun-cat">Oyun</option>
+          <option value="donanim-cat">Donanım</option>
+          <option value="internet-cat">İnternet</option>
+          <option value="gunluk-cat">Günlük</option>
+        </select>
+        <textarea id="new-topic-msg" placeholder="İlk mesajın..."></textarea>
+        <button onclick="addNewTopic()">Gönder</button>
+        <button onclick="document.getElementById('new-topic-form').style.display='none'">İptal</button>
+      </div>
+
+      <div class="category" id="oyun-cat">
+        <div class="category-title">Oyun</div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Postal 2 DLC\'si alınır mı?')">Postal 2 DLC'si alınır mı?</span><button class="join-btn" onclick="openTopicChat('Postal 2 DLC\'si alınır mı?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Cry of Fear modları hangileri iyi?')">Cry of Fear modları hangileri iyi?</span><button class="join-btn" onclick="openTopicChat('Cry of Fear modları hangileri iyi?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('GTA SA bug arşivi')">GTA SA bug arşivi</span><button class="join-btn" onclick="openTopicChat('GTA SA bug arşivi')">Katıl</button></div>
+        <div class="expand-btn" onclick="expandCategory('oyun-cat')">+ 5 konu daha (genişlet)</div>
+      </div>
+
+      <div class="category" id="donanim-cat">
+        <div class="category-title">Donanım</div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('GTX 660 2012\'de mantıklı mı?')">GTX 660 2012'de mantıklı mı?</span><button class="join-btn" onclick="openTopicChat('GTX 660 2012\'de mantıklı mı?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('İkinci el ekran kartı riskleri')">İkinci el ekran kartı riskleri</span><button class="join-btn" onclick="openTopicChat('İkinci el ekran kartı riskleri')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('AMD mi NVIDIA mı?')">AMD mi NVIDIA mı?</span><button class="join-btn" onclick="openTopicChat('AMD mi NVIDIA mı?')">Katıl</button></div>
+        <div class="expand-btn" onclick="expandCategory('donanim-cat')">+ 4 konu daha (genişlet)</div>
+      </div>
+
+      <div class="category" id="internet-cat">
+        <div class="category-title">İnternet</div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Eski forumlar neden öldü?')">Eski forumlar neden öldü?</span><button class="join-btn" onclick="openTopicChat('Eski forumlar neden öldü?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('4chan eskiden daha mı iyiydi?')">4chan eskiden daha mı iyiydi?</span><button class="join-btn" onclick="openTopicChat('4chan eskiden daha mı iyiydi?')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('YouTube 2009 vs şimdi')">YouTube 2009 vs şimdi</span><button class="join-btn" onclick="openTopicChat('YouTube 2009 vs şimdi')">Katıl</button></div>
+        <div class="expand-btn" onclick="expandCategory('internet-cat')">+ 6 konu daha (genişlet)</div>
+      </div>
+
+      <div class="category" id="gunluk-cat">
+        <div class="category-title">Günlük</div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Gece 3\'te internet başka oluyor')">Gece 3'te internet başka oluyor</span><button class="join-btn" onclick="openTopicChat('Gece 3\'te internet başka oluyor')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Bugün her şey boş geldi')">Bugün her şey boş geldi</span><button class="join-btn" onclick="openTopicChat('Bugün her şey boş geldi')">Katıl</button></div>
+        <div class="topic-line"><span class="topic" onclick="openTopicChat('Saçma ama yazasım vardı')">Saçma ama yazasım vardı</span><button class="join-btn" onclick="openTopicChat('Saçma ama yazasım vardı')">Katıl</button></div>
+        <div class="expand-btn" onclick="expandCategory('gunluk-cat')">+ 5 konu daha (genişlet)</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>En Popüler Konu (Anlık): GTX 660 alınır mı?</h2>
+      <div id="comments-section">
+        <div class="thread-post">
+          <span class="post-user user-yigit">yigit:</span>
+          <div class="post-content">GTX 660 yeni çıktı, fiyatına değer mi yoksa 670 mi bakayım?</div>
+        </div>
+        <div class="thread-post">
+          <span class="post-user user-xxaan">xxaan:</span>
+          <div class="post-content">alınır ama ilerisi için zayıf kalabilir, para varsa 670</div>
+        </div>
+        <div class="thread-post">
+          <span class="post-user user-anon">anon_452:</span>
+          <div class="post-content">ikinci el alma sakın, mining muhabbeti dönüyor</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;">
+        <textarea id="comment-textarea" placeholder="Yorum yaz (küfür serbest)..."></textarea>
+        <button class="send-btn" onclick="sendComment()">Gönder</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat-page" class="page">
+    <div class="panel">
+      <h2 id="chat-title">Sohbet</h2>
+      <div id="chat-messages"></div>
+      <div style="margin-top:10px;">
+        <textarea id="chat-textarea" placeholder="Mesaj yaz..."></textarea>
+        <button class="send-btn" onclick="sendChatMessage()">Gönder</button>
+      </div>
+      <button onclick="showPage('home')">← Ana Sayfaya Dön</button>
+    </div>
+  </div>
+
+  <div id="gruplar" class="page">
+    <div class="panel">
+      <h2>Gruplar</h2>
+      <div class="group-item"><span>NVIDIA Sevenler Kulübü</span><button class="group-btn" onclick="joinGroup('NVIDIA Sevenler')">Katıl & Sohbet Et</button></div>
+      <div class="group-item"><span>Postal 2 Fanboyları</span><button class="group-btn" onclick="joinGroup('Postal 2 Fanboyları')">Katıl & Sohbet Et</button></div>
+      <div class="group-item"><span>Ekran Kartı Alış-Satış</span><button class="group-btn" onclick="joinGroup('Ekran Kartı Alış-Satış')">Katıl & Sohbet Et</button></div>
+    </div>
+  </div>
+
+  <div id="uyeler" class="page">
+    <div class="panel">
+      <h2>Üyeler</h2>
+      <p>Toplam üye: 426</p>
+      <ul id="member-list" style="list-style:none; padding:0;">
+        <li><span class="user-creator">yigitmarston</span> — creator</li>
+        <li><span class="user-admin">kanlicayogurdu</span> — admin</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="hakkimizda" class="page">
+    <div class="panel">
+      <h2>Hakkımızda</h2>
+      <div class="about-content">
+        <p>Yigitforum, eski internet ruhunu yaşatmak için kurulmuştur.</p>
+        <p>Created in 2006</p>
+      </div>
+      <div class="about-photo-container">
+        <img src="about-photo1.jpg" alt="1" class="about-photo portrait">
+        <img src="about-photo2.jpg" alt="2" class="about-photo">
+      </div>
+    </div>
+  </div>
+
+  <div id="giris" class="page">
+    <div class="panel">
+      <h2>Giriş Yap</h2>
+      <p>Kullanıcı adı: <input type="text" id="login-username"></p>
+      <p>Şifre: <input type="password" id="login-password"></p>
+      <button onclick="loginUser()">Giriş</button>
+    </div>
+  </div>
+
+  <div id="kayit" class="page">
+    <div class="panel">
+      <h2>Kayıt Ol</h2>
+      <p>Kullanıcı adı: <input type="text" id="register-username"></p>
+      <p>Şifre: <input type="password" id="register-password"></p>
+      <button onclick="registerUser()">Kayıt Ol</button>
+    </div>
+  </div>
+</div>
+
+<div class="online">
+  <b>Online: 9</b><br><br>
+  <span class="user-xxaan">xxaan</span><br>
+  <span class="user-yigit">yigit</span>
+</div>
+
+<div class="footer"> powered by mucahit yildirim · powered by y3githerrschaft</div>
+
+<script>
+  /* ----------------- STARTUP OVERLAY LOGIC ----------------- */
+  (function() {
+    const overlay = document.getElementById('xp-startup');
+    const bar = document.getElementById('xp-progress-bar');
+    const label = document.getElementById('xp-progress-label');
+    const skip = document.getElementById('startup-skip');
+    const music = document.getElementById('bgMusic');
+
+    const AUTO_HIDE_AFTER_MS = 3000;
+    let startTime = null;
+    let rafId = null;
+
+    function updateProgress(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const pct = Math.min(100, Math.round((elapsed / AUTO_HIDE_AFTER_MS) * 100));
+      if (bar) bar.style.width = pct + '%';
+      if (label) label.textContent = `Booting components... ${pct}%`;
+      if (elapsed < AUTO_HIDE_AFTER_MS) {
+        rafId = requestAnimationFrame(updateProgress);
+      } else {
+        hideOverlay();
+      }
+    }
+
+    function hideOverlay() {
+      if (!overlay) return;
+      overlay.classList.add('hidden');
+      if(music && music.paused) music.play().catch(e => {});
+      if (rafId) cancelAnimationFrame(rafId);
+    }
+
+    function start() {
+      if (!overlay) return;
+      rafId = requestAnimationFrame(updateProgress);
+      overlay.addEventListener('click', hideOverlay);
+      skip.addEventListener('click', (e) => { e.stopPropagation(); hideOverlay(); });
+    }
+
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', start) : start();
+  })();
+
+  /* ----------------- SITE SCRIPTS ----------------- */
+  let loggedIn = false;
+  let currentUser = '';
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    updateAuth();
+  }
+
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => showPage(link.getAttribute('data-page')));
+  });
+
+  function updateAuth() {
+    const authSection = document.getElementById('auth-section');
+    if (loggedIn) {
+      authSection.innerHTML = `<span class="logged-in">${currentUser}</span> | <a onclick="logout()">Çıkış</a>`;
+    }
+  }
+
+  function loginUser() {
+    currentUser = document.getElementById('login-username').value;
+    loggedIn = true;
+    showPage('home');
+  }
+
+  function logout() { loggedIn = false; location.reload(); }
+
+  function sendComment() {
+    const ta = document.getElementById('comment-textarea');
+    const div = document.createElement('div');
+    div.className = 'thread-post';
+    div.innerHTML = `<span class="post-user">${loggedIn ? currentUser : 'anon'}:</span><div class="post-content">${ta.value}</div>`;
+    document.getElementById('comments-section').appendChild(div);
+    ta.value = '';
+  }
+</script>
+</body>
+</html>
