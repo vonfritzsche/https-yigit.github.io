@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>yigitforum</title>
+<link rel="icon" type="image/png" href="favicon.ico">
+
 <style>
   /* --- STARTUP OVERLAY STYLES (Windows XP tarzı siyah açılış) --- */
   #xp-startup {
@@ -138,7 +140,7 @@
 
   /* --- END STARTUP OVERLAY STYLES --- */
 
-  /* --- EXISTING SITE STYLES (senin gönderdiğin stil) --- */
+  /* --- EXISTING SITE STYLES --- */
   body { margin:0; font-family:Tahoma, Arial, sans-serif; background:linear-gradient(#000,#0a0a0a); color:#cfcfcf; }
   header { background:linear-gradient(#1e1e1e,#050505); border-bottom:1px solid #2b2b2b; padding:10px 16px; position:relative; text-align:center; }
   .logo { font-size:20px; font-weight:bold; color:#fff; }
@@ -186,7 +188,7 @@
   .admin-only { color:#ff4444; font-weight:bold; font-size:13px; text-align:center; padding:40px 0; }
   .member-list li { margin:6px 0; font-size:12px; }
 
-  /* Hakkımızda için fotoğraf alanı: 3 fotoğraf düzeni (bozulmadan küçülür) */
+  /* Hakkımızda için fotoğraf alanı */
   .about-photo-container {
     text-align:center;
     margin:30px 0;
@@ -194,14 +196,14 @@
     justify-content:center;
     gap:20px;
     align-items:flex-start;
-    flex-wrap:wrap; /* dar ekranda alt alta geçsin */
+    flex-wrap:wrap;
     padding-top:8px;
   }
 
   .about-photo {
-    max-height: 300px;   /* Dikey boyu sınırlar, bozulmaz */
-    width: auto;          /* Oran bozulmaz */
-    max-width: 32%;      /* üçlü düzen için genişlik sınırlaması */
+    max-height: 300px;
+    width: auto;
+    max-width: 32%;
     display: inline-block;
     border: 2px solid #333;
     box-shadow: 0 0 15px rgba(0,0,0,0.8);
@@ -210,16 +212,8 @@
     object-fit: contain;
   }
 
-  /* Eğer fotoğrafların dar ve dikeyse daha güvenli sınırlama */
-  .about-photo.portrait {
-    max-height: 320px;
-    max-width: 220px;
-  }
-
-  /* Küçük ekranlarda: fotoğraflar alt alta, daha küçük boy */
   @media (max-width:900px) {
     .about-photo { max-width: 45%; max-height: 260px; }
-    .about-photo.portrait { max-width: 200px; max-height: 260px; }
   }
   @media (max-width:520px) {
     #startup-image { width: 180px; }
@@ -227,7 +221,6 @@
     .logo { font-size:18px; }
     nav a { margin: 0 8px; font-size:11px; }
     .about-photo { max-width: 90%; max-height: 220px; }
-    .about-photo.portrait { max-width: 220px; max-height: 280px; }
   }
 </style>
 </head>
@@ -250,6 +243,7 @@
     <div class="startup-skip" id="startup-skip" tabindex="0">Hemen geç (tıkla)</div>
   </div>
 </div>
+
 <header>
   <span class="logo">yigit<span>forum</span></span>
   <div class="search-container">
@@ -336,19 +330,9 @@
         </div>
       </div>
       <div style="margin-top:10px;">
-        <textarea id="comment-textarea" placeholder="Yorum yaz (küfür serbest, konu dışı silinir)..."></textarea>
+        <textarea id="comment-textarea" placeholder="Yorum yaz (küfür serbest)..."></textarea>
         <button class="send-btn" onclick="sendComment()">Gönder</button>
       </div>
-    </div>
-
-    <div class="panel">
-      <h2>Forum Kuralları</h2>
-      <ul style="font-size:12px">
-        <li>Konu dışı mesaj silinir</li>
-        <li>Boş muhabbet = perma ban</li>
-        <li>Troll / spam = kalıcı ban</li>
-        <li>Gereksiz drama ban sebebi</li>
-      </ul>
     </div>
   </div>
 
@@ -370,13 +354,6 @@
       <div class="group-item"><span>NVIDIA Sevenler Kulübü</span><button class="group-btn" onclick="joinGroup('NVIDIA Sevenler')">Katıl & Sohbet Et</button></div>
       <div class="group-item"><span>Postal 2 Fanboyları</span><button class="group-btn" onclick="joinGroup('Postal 2 Fanboyları')">Katıl & Sohbet Et</button></div>
       <div class="group-item"><span>Ekran Kartı Alış-Satış</span><button class="group-btn" onclick="joinGroup('Ekran Kartı Alış-Satış')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>Oyun Önerileri</span><button class="group-btn" onclick="joinGroup('Oyun Önerileri')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>Retro Donanım Sohbeti</span><button class="group-btn" onclick="joinGroup('Retro Donanım')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>Warez & Crack Konuları</span><button class="group-btn" onclick="joinGroup('Warez & Crack')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>Overclock & Soğutma</span><button class="group-btn" onclick="joinGroup('Overclock & Soğutma')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>Gece Muhabbeti</span><button class="group-btn" onclick="joinGroup('Gece Muhabbeti')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>AMD Fanları (Kırmızı Takım)</span><button class="group-btn" onclick="joinGroup('AMD Fanları')">Katıl & Sohbet Et</button></div>
-      <div class="group-item"><span>Half-Life & Modlama</span><button class="group-btn" onclick="joinGroup('Half-Life Mod')">Katıl & Sohbet Et</button></div>
     </div>
   </div>
 
@@ -385,19 +362,9 @@
       <h2>Üyeler</h2>
       <p>Toplam üye: 426</p>
       <ul id="member-list" style="list-style:none; padding:0;">
-        <li><span class="user-creator">yigitmarston</span> — creator — son giriş: 1 dk önce</li>
-        <li><span class="user-admin">kanlicayogurdu</span> — admin — son giriş: 5 dk önce</li>
-        <li><span class="user-yigit">yigit</span> — son giriş: 2 dk önce</li>
-        <li><span class="user-xxaan">xxaan</span> — son giriş: 15 dk önce</li>
-        <li><span class="user-anon">anon_452</span> — son giriş: 1 saat önce</li>
+        <li><span class="user-creator">yigitmarston</span> — creator</li>
+        <li><span class="user-admin">kanlicayogurdu</span> — admin</li>
       </ul>
-    </div>
-  </div>
-
-  <div id="arsiv" class="page">
-    <div class="panel">
-      <h2>Arşiv</h2>
-      <div class="admin-only">Only can viewed by admins</div>
     </div>
   </div>
 
@@ -407,15 +374,10 @@
       <div class="about-content">
         <p>Yigitforum, eski internet ruhunu yaşatmak için kurulmuştur.</p>
         <p>Created in 2006</p>
-        <p>Kurucu: yigit</p>
-        <p>Email: yigit@xpmail.com</p>
-        <p>Burası 2000'ler nostaljisi, gece muhabbetleri, ekran kartı kavgaları ve "eski forumlar daha iyiydi" diyenlerin toplandığı yer.</p>
       </div>
-
-      <div class="about-photo-container" aria-hidden="false">
-        <img src="about-photo1.jpg" alt="Yigitforum foto 1" class="about-photo portrait">
-        <img src="about-photo2.jpg" alt="Yigitforum foto 2" class="about-photo">
-        <img src="about-photo3.jpg" alt="Yigitforum foto 3" class="about-photo">
+      <div class="about-photo-container">
+        <img src="about-photo1.jpg" alt="1" class="about-photo portrait">
+        <img src="about-photo2.jpg" alt="2" class="about-photo">
       </div>
     </div>
   </div>
@@ -437,18 +399,15 @@
       <button onclick="registerUser()">Kayıt Ol</button>
     </div>
   </div>
-
 </div>
 
 <div class="online">
   <b>Online: 9</b><br><br>
   <span class="user-xxaan">xxaan</span><br>
-  <span class="user-yigit">yigit</span><br>
-  <span class="user-anon">anon_452</span><br>
-  <span class="user-anon">anon_991</span><br>
+  <span class="user-yigit">yigit</span>
 </div>
 
-<div class="footer"> powered by yıldırım family· powered by y3githerrschaft</div>
+<div class="footer"> powered by mucahit yildirim · powered by y3githerrschaft</div>
 
 <script>
   /* ----------------- STARTUP OVERLAY LOGIC ----------------- */
@@ -457,29 +416,19 @@
     const bar = document.getElementById('xp-progress-bar');
     const label = document.getElementById('xp-progress-label');
     const skip = document.getElementById('startup-skip');
-    
-    // MÜZİK KONTROLÜ
     const music = document.getElementById('bgMusic');
-    if(music) music.volume = 0.5; // Ses seviyesini %50 yap
 
-    // Ayarlar: burada değiştir
-    const AUTO_HIDE_AFTER_MS = 3000; // otomatik kapanma süresi (ms) -> 3000 = 3s
-    const PROGRESS_DURATION_MS = AUTO_HIDE_AFTER_MS; // barın dolması için süre (aynı zamanda otomatik kapanma)
-
-    // Animasyon kontrolü
+    const AUTO_HIDE_AFTER_MS = 3000;
     let startTime = null;
     let rafId = null;
 
     function updateProgress(timestamp) {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
-      const pct = Math.min(100, Math.round((elapsed / PROGRESS_DURATION_MS) * 100));
-      if (bar) {
-        bar.style.width = pct + '%';
-        bar.setAttribute('aria-valuenow', String(pct));
-      }
+      const pct = Math.min(100, Math.round((elapsed / AUTO_HIDE_AFTER_MS) * 100));
+      if (bar) bar.style.width = pct + '%';
       if (label) label.textContent = `Booting components... ${pct}%`;
-      if (elapsed < PROGRESS_DURATION_MS) {
+      if (elapsed < AUTO_HIDE_AFTER_MS) {
         rafId = requestAnimationFrame(updateProgress);
       } else {
         hideOverlay();
@@ -489,241 +438,55 @@
     function hideOverlay() {
       if (!overlay) return;
       overlay.classList.add('hidden');
-      overlay.setAttribute('aria-hidden', 'true');
-      
-      // MÜZİĞİ BAŞLAT (Eğer daha önce başlamadıysa)
-      if(music && music.paused) music.play().catch(e => console.log("Otomatik oynatma engellendi, etkileşim bekleniyor."));
-
-      // cleanup
+      if(music && music.paused) music.play().catch(e => {});
       if (rafId) cancelAnimationFrame(rafId);
-      // focus'u ana sayfaya ver (erişilebilirlik için)
-      setTimeout(() => {
-        const firstLink = document.querySelector('nav a[data-page="home"]');
-        if (firstLink) firstLink.focus();
-      }, 550);
     }
 
     function start() {
-      // Görünür durumdaysa animasyonu başlat
       if (!overlay) return;
-      startTime = null;
       rafId = requestAnimationFrame(updateProgress);
-      
-      // MÜZİK TETİKLEYİCİ: Kullanıcı overlay'e veya skip'e tıkladığında müzik başlar
-      overlay.addEventListener('click', function onOverlayClick(e){
-        if(music && music.paused) music.play(); // Tıklama anında müziği başlat
-        hideOverlay();
-        overlay.removeEventListener('click', onOverlayClick);
-      });
-
-      skip.addEventListener('click', function(e){
-        e.stopPropagation();
-        if(music && music.paused) music.play(); // Atla dediğinde de müziği başlat
-        hideOverlay();
-      });
-
-      // space veya enter ile skip butonuna basılmasını sağla (erişilebilirlik)
-      skip.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          if(music && music.paused) music.play();
-          hideOverlay();
-        }
-      });
-      // Esc ile kapama
-      window.addEventListener('keydown', function onKey(e){
-        if (e.key === 'Escape') {
-          if(music && music.paused) music.play();
-          hideOverlay();
-          window.removeEventListener('keydown', onKey);
-        }
-      });
+      overlay.addEventListener('click', hideOverlay);
+      skip.addEventListener('click', (e) => { e.stopPropagation(); hideOverlay(); });
     }
 
-    // DOM hazır olunca başlat
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', start);
-    } else {
-      start();
-    }
-
-    // Eğer overlay dosyası bulunmuyorsa (resim yüklenmezse) yine de süre tamamlayıp açılış yap
-    const img = document.getElementById('startup-image');
-    if (img) {
-      img.addEventListener('error', function() {
-        // resim bulunmamışsa görünümü sadeleştir
-        img.style.display = 'none';
-        const txt = document.querySelector('.startup-text');
-        if (txt) txt.textContent = 'Starting yigitforum… (resim yüklenemedi)';
-      });
-    }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', start) : start();
   })();
-  /* --------------- END STARTUP OVERLAY LOGIC --------------- */
 
-  /* --------------- EXISTING SITE SCRIPTS (senin script) --------------- */
+  /* ----------------- SITE SCRIPTS ----------------- */
   let loggedIn = false;
   let currentUser = '';
 
-  // Sayfa değiştirme
-  const links = document.querySelectorAll('nav a, .auth a');
-  const pages = document.querySelectorAll('.page');
   function showPage(pageId) {
-    pages.forEach(p => p.classList.remove('active'));
-    const el = document.getElementById(pageId);
-    if (el) el.classList.add('active');
-    links.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('data-page') === pageId) link.classList.add('active');
-    });
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
     updateAuth();
   }
-  links.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      showPage(link.getAttribute('data-page'));
-    });
+
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => showPage(link.getAttribute('data-page')));
   });
 
-  // Auth güncelleme
   function updateAuth() {
     const authSection = document.getElementById('auth-section');
     if (loggedIn) {
-      authSection.innerHTML = `<span class="logged-in">Hoş geldin, ${currentUser}!</span> | <a onclick="logout()">Çıkış</a>`;
-    } else {
-      authSection.innerHTML = `<a onclick="showPage('giris')">Giriş Yap</a> | <a onclick="showPage('kayit')">Kayıt Ol</a>`;
+      authSection.innerHTML = `<span class="logged-in">${currentUser}</span> | <a onclick="logout()">Çıkış</a>`;
     }
   }
 
-  // Kayıt
-  function registerUser() {
-    const username = document.getElementById('register-username').value.trim();
-    if (!username) return alert('Kullanıcı adı gir reis!');
-    currentUser = username;
-    loggedIn = true;
-    updateAuth();
-    showPage('home');
-    alert('Kayıt tamamlandı: ' + username);
-  }
-
-  // Giriş
   function loginUser() {
-    const username = document.getElementById('login-username').value.trim();
-    if (!username) return alert('Kullanıcı adı gir!');
-    currentUser = username;
+    currentUser = document.getElementById('login-username').value;
     loggedIn = true;
-    updateAuth();
     showPage('home');
-    alert('Giriş yapıldı: ' + username);
   }
 
-  // Çıkış
-  function logout() {
-    loggedIn = false;
-    currentUser = '';
-    updateAuth();
-    alert('Çıkış yapıldı!');
-  }
+  function logout() { loggedIn = false; location.reload(); }
 
-  // Yeni konu için üye kontrolü
-  function checkLoginForNewTopic() {
-    if (!loggedIn) {
-      alert('Üye olman lazım bro! Kayıt sayfasına gidiyorsun...');
-      showPage('kayit');
-      return;
-    }
-    document.getElementById('new-topic-form').style.display = 'block';
-  }
-
-  // Yeni konu ekleme
-  function addNewTopic() {
-    if (!loggedIn) return alert('Üye olman lazım!');
-    const title = document.getElementById('new-topic-title').value.trim();
-    const catId = document.getElementById('new-topic-category').value;
-    if (!title) return alert('Başlık gir reis');
-    const cat = document.getElementById(catId);
-    const newLine = document.createElement('div');
-    newLine.className = 'topic-line';
-    // güvenlik: başlık içine tek tırnak gelirse JS hatası olmasın diye encode etme
-    const safeTitle = title.replace(/'/g, "\\'");
-    newLine.innerHTML = `<span class="topic" onclick="openTopicChat('${safeTitle}')">${title}</span><button class="join-btn" onclick="openTopicChat('${safeTitle}')">Katıl</button>`;
-    const expandBtn = cat.querySelector('.expand-btn');
-    cat.insertBefore(newLine, expandBtn);
-    alert('Konu eklendi!');
-    document.getElementById('new-topic-form').style.display = 'none';
-  }
-
-  // Yorum gönderme
   function sendComment() {
     const ta = document.getElementById('comment-textarea');
-    const comment = ta.value.trim();
-    if (!comment) return;
-    let userName = loggedIn ? currentUser : 'anon_' + Math.floor(Math.random() * 10000);
     const div = document.createElement('div');
     div.className = 'thread-post';
-    div.innerHTML = `<span class="post-user ${loggedIn ? 'user-yigit' : 'user-anon'}">${userName}:</span><div class="post-content">${escapeHtml(comment)}</div>`;
+    div.innerHTML = `<span class="post-user">${loggedIn ? currentUser : 'anon'}:</span><div class="post-content">${ta.value}</div>`;
     document.getElementById('comments-section').appendChild(div);
-    ta.value = '';
-  }
-
-  // Diğer fonksiyonlar aynı kaldı
-  function searchTopics(query) {
-    query = query.toLowerCase().trim();
-    document.querySelectorAll('.topic-line').forEach(line => {
-      const text = line.querySelector('.topic').textContent.toLowerCase();
-      line.style.display = text.includes(query) || query === '' ? 'flex' : 'none';
-    });
-  }
-
-  function expandCategory(catId) {
-    const cat = document.getElementById(catId);
-    const btn = cat.querySelector('.expand-btn');
-    if (btn.dataset.expanded === 'true') {
-      location.reload();
-      return;
-    }
-    const extras = {
-      'oyun-cat': ['Far Cry co-op nasıl?', 'HL1 modları', 'DOS oyunları', 'PES 6 patch', 'NFS Underground'],
-      'donanim-cat': ['HD 7970 iş görür mü?', 'i5 2500K OC', 'Ucuz DDR3', 'SSD vs HDD'],
-      'internet-cat': ['Dial-up sesi', 'MSN nick kırma', 'Eski Turkcell', 'Google 2008', 'Torrent tracker'],
-      'gunluk-cat': ['Sabah 6 eve dönüş', 'Bugün işsizim', 'Saçma rüya', 'Sigara bıraktım', 'En iyi dönerci']
-    }[catId] || [];
-    extras.forEach(t => {
-      const line = document.createElement('div');
-      line.className = 'topic-line';
-      const safeT = t.replace(/'/g, "\\'");
-      line.innerHTML = `<span class="topic" onclick="openTopicChat('${safeT}')">${t}</span><button class="join-btn" onclick="openTopicChat('${safeT}')">Katıl</button>`;
-      cat.insertBefore(line, btn);
-    });
-    btn.textContent = '− Gizle ekstra konuları';
-    btn.dataset.expanded = 'true';
-  }
-
-  function openTopicChat(title) {
-    alert('Sohbet açıldı: ' + title + '\\n(gerçek sohbet için backend lazım reis)');
-  }
-
-  function joinGroup(groupName) {
-    alert(groupName + ' grubuna katıldın! Sohbet penceresi açılıyor...');
-  }
-
-  // yardımcı fonksiyon: basit html escape
-  function escapeHtml(unsafe) {
-    return String(unsafe)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  // Basit chat gönder (demo)
-  function sendChatMessage() {
-    const ta = document.getElementById('chat-textarea');
-    const msg = ta.value.trim();
-    if (!msg) return;
-    const div = document.createElement('div');
-    div.textContent = (loggedIn ? currentUser : 'anon') + ': ' + msg;
-    document.getElementById('chat-messages').appendChild(div);
     ta.value = '';
   }
 </script>
